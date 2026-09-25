@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spineapi"
+version = "1.0.0"
+description = "Defensive API security posture auditor"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Renan Botasse" }]
+dependencies = []
+
+[project.scripts]
+spineapi = "spineapi.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["spineapi*"]

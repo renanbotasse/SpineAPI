@@ -32,10 +32,20 @@ python3 -m spineapi --help
 
 ## Quick start (sample app)
 
+Sample OpenAPI + tiny app are packaged under `spineapi/fixtures/`.
+
+Easiest:
+
+```bash
+python3 -m spineapi report --demo -o api-security-report
+```
+
+Or with explicit paths:
+
 ```bash
 python3 -m spineapi report \
-  --source-code fixtures/sample_app \
-  --swagger fixtures/openapi.json \
+  --source-code spineapi/fixtures/sample_app \
+  --swagger spineapi/fixtures/openapi.json \
   -o api-security-report
 ```
 
@@ -111,6 +121,9 @@ spineapi/
   testgen.py      # defensive pytest generator
   audit.py        # orchestration
   cli.py          # command line
+  fixtures/       # sample OpenAPI + mini app for local testing
+    openapi.json
+    sample_app/
 ```
 
 ---

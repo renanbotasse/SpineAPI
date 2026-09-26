@@ -17,3 +17,6 @@ spineapi = "spineapi.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["spineapi*"]
+
+[tool.setuptools.package-data]
+spineapi = ["fixtures/**/*"]

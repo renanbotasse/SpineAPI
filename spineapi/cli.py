@@ -5,11 +5,16 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from pathlib import Path
 from typing import List, Optional
 
 from spineapi.audit import run_audit
 from spineapi.reporter import SecurityPostureReporter
 from spineapi.testgen import DefensiveTestGenerator
+
+
+def package_fixtures_dir() -> Path:
+    return Path(__file__).resolve().parent / "fixtures"
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -55,16 +60,30 @@ def build_parser() -> argparse.ArgumentParser:
         default=None,
         help="Path for generated defensive tests (generate-tests)",
     )
+    parser.add_argument(
+        "--demo",
+        action="store_true",
+        help="Use packaged sample app + openapi.json fixtures",
+    )
     return parser
 
 
 def main(argv: Optional[List[str]] = None) -> int:
     args = build_parser().parse_args(argv)
 
+    source_code = args.source_code
+    swagger = args.swagger
+    if args.demo:
+        fixtures = package_fixtures_dir()
+        source_code = str(fixtures / "sample_app")
+        swagger = str(fixtures / "openapi.json")
+        print(f"[*] Demo mode: {source_code}")
+        print(f"[*] Demo OpenAPI: {swagger}")
+
     print("[*] Running SpineAPI defensive audit...")
     report = run_audit(
-        project_root=args.source_code,
-        swagger=args.swagger,
+        project_root=source_code,
+        swagger=swagger,
         include_integrations=not args.no_integrations,
         include_source=not args.no_source,
     )
